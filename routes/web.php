@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Livewire\TaskList;
+use App\Livewire\TaskForm;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -16,5 +18,9 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
-
+Route::middleware('auth')->group(function () {
+    Route::get('/tasks', TaskList::class)->name('tasks');
+    Route::get('/tasks/create', TaskForm::class)->name('tasks.create');
+    Route::get('/tasks/edit/{taskId}', TaskForm::class)->name('task.edit');
+});
 require __DIR__.'/auth.php';
